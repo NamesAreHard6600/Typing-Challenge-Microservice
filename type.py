@@ -65,7 +65,7 @@ class AnagramChallenge:
 
     def generate_challenge(self):
         num_characters = NUM_CHARACTERS[self.difficulty]
-        self.actual_answer = random.choices(string.ascii_lowercase, num_characters)
+        self.actual_answer = random.choices(string.ascii_lowercase, k=num_characters)
 
         self.challenge = "".join(self.challenge)
 
