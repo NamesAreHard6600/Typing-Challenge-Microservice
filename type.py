@@ -18,7 +18,6 @@ class AnagramChallenge:
 
         self.difficulty = EASY
         self.challenge = None
-        self.actual_answer = None
         self.user_answer = None
 
     def main_loop(self):
@@ -36,7 +35,7 @@ class AnagramChallenge:
                 print(f"Generated Challenge - Challenge: {self.challenge}")
 
                 self.socket.send_pyobj(["problem", self.challenge])
-            elif message[0] == "answer" and self.actual_answer:
+            elif message[0] == "answer" and self.challenge:
                 success = self.parse_response(message)
                 if not success:
                     self.socket.send_pyobj(["error", "Error Parsing Response"])
@@ -44,7 +43,7 @@ class AnagramChallenge:
 
                 success = self.check_answer()
                 print(f"Accepted Answer - Challenge: {self.challenge} - Answer Given: {self.user_answer} - Success: {success}")
-                self.socket.send_pyobj(["answer", 1 if success else 0, self.actual_answer])
+                self.socket.send_pyobj(["answer", 1 if success else 0, self.challenge])
                 self.reset()
             else:
                 self.socket.send_pyobj(["error", "Error Parsing Message"])
@@ -52,7 +51,6 @@ class AnagramChallenge:
     def reset(self):
         self.difficulty = EASY
         self.challenge = None
-        self.actual_answer = None
         self.user_answer = None
 
     def parse_request(self, request):
@@ -65,8 +63,7 @@ class AnagramChallenge:
 
     def generate_challenge(self):
         num_characters = NUM_CHARACTERS[self.difficulty]
-        self.actual_answer = random.choices(string.ascii_lowercase, k=num_characters)
-
+        self.challenge = random.choices(string.ascii_lowercase, k=num_characters)
         self.challenge = "".join(self.challenge)
 
     def parse_response(self, response):
@@ -80,7 +77,7 @@ class AnagramChallenge:
         return False
 
     def check_answer(self):
-        return self.actual_answer == self.user_answer
+        return self.challenge == self.user_answer
 
 
 def main():
