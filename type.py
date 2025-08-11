@@ -9,7 +9,7 @@ DIFFICULTIES = {"easy": EASY, "medium": MEDIUM, "hard": HARD}
 NUM_CHARACTERS = [None, 10, 15, 30]
 
 
-class AnagramChallenge:
+class TypingChallenge:
     def __init__(self):
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.REP)
