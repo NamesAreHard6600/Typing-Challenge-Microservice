@@ -81,7 +81,7 @@ class TypingChallenge:
 
 
 def main():
-    challenge = AnagramChallenge()
+    challenge = TypingChallenge()
     challenge.main_loop()
 
 
